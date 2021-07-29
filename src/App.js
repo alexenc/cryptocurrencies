@@ -33,6 +33,7 @@ const Heading = styled.h1`
     background-color: #66A2FE;
     display: block;
   }
+  
 `
 
 function App() {
@@ -47,7 +48,7 @@ function App() {
 
       <div>
         <Heading>Current Crypto prize</Heading>
-        
+
         <Form />
       </div>
     </Container>
