@@ -1,5 +1,8 @@
+import React, {useEffect, useState} from 'react';
 import styled from "@emotion/styled";
 import useCurrencie from "../hooks/useCurrencie";
+import useCrypto from "../hooks/useCrypto";
+import axios from 'axios';
 
 const Button = styled.input`
     margin-top: 20px;
@@ -19,7 +22,21 @@ const Button = styled.input`
     }
 `
 
-const Form = () => {
+const Error = styled.p`
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgb(200, 0, 140);
+`
+
+const Form = ({setCoin, setCryptoc}) => {
+
+    const [cryptoList, setcryptoList] = useState([])
+    const [error, setError] = useState(false)
 
     const currencies = [
         {code: 'USD', name: 'USD'},
@@ -27,14 +44,45 @@ const Form = () => {
         {code: 'MXN', name: 'MXN'},
         {code: 'GBP', name: 'GBP'}
     ]
+    
 
     //use useCurrencies
-    const [currencie, SelectCurrencie] = useCurrencie('Select your currencie', '', currencies)
+    const [currencie, SelectCurrencie] = useCurrencie('Choose your badge', '', currencies)
+    const [crypto, SelectCrypto] = useCrypto('Select your cryptocurrencie', '', cryptoList)
+
+    //api call
+    useEffect(()=>{
+        const apiCall = async () => {
+            const url = 'https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=USD'
+
+            const result = await axios.get(url)
+            setcryptoList(result.data.Data)
+        }
+        apiCall()
+    }, [])
+
+    const quoteCrypto = e => {
+        e.preventDefault()
+
+        //validate if both fields are completed
+
+        if(currencie === '' || crypto === '') {
+            setError(true)
+            return
+        }
+
+        setError(false)
+        setCryptoc(crypto)
+        setCoin(currencie)
+    }
 
     return ( 
-       <form>
-
+       <form
+        onSubmit={quoteCrypto}
+       >
+           {error ? <Error>Complete both fields in the form</Error> : null}
            <SelectCurrencie />
+           <SelectCrypto/>
            <Button
             type="submit"
             value="calculate"

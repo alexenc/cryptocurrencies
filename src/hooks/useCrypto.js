@@ -11,7 +11,7 @@ const Label = styled.label`
     display: block;
 `
 
-const SelectC = styled.select`
+const SelectCryptoC = styled.select`
     width: 100%;
     display: block;
     padding: 1rem;
@@ -21,28 +21,28 @@ const SelectC = styled.select`
     font-size: 1.2rem;
 `
 
-const useCurrencie = (label, stateInicial, currencies) => {
+const useCrypto = (label, stateInicial, currencies) => {
 
     //state de custom hook
     const [state, setState] = useState(stateInicial);
 
-    const Select = () => (
+    const SelectCrypto = () => (
         <Fragment>
             <Label>{label}</Label>
-            <SelectC
+            <SelectCryptoC
                 onChange={e => setState(e.target.value)}
                 value={state}
             >
-            <option value="">--Select your badge -</option>                
+            <option value="">--Select your cryptocurrencie -</option>                
                 {currencies.map(option => (
-                    <option key={option.code} value={option.code}>{option.name}</option>
+                    <option key={option.CoinInfo.Id} value={option.CoinInfo.Name}>{option.CoinInfo.FullName}</option>
                 ))}
-            </SelectC>
+            </SelectCryptoC>
         </Fragment>
         
     );
     //return state
-    return [state, Select, setState];
+    return [state, SelectCrypto, setState];
 }
 
-export default useCurrencie;
+export default useCrypto;
