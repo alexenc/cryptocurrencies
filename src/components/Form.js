@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import useCurrencie from "../hooks/useCurrencie";
 
 const Button = styled.input`
     margin-top: 20px;
@@ -19,8 +20,21 @@ const Button = styled.input`
 `
 
 const Form = () => {
+
+    const currencies = [
+        {code: 'USD', name: 'USD'},
+        {code: 'EUR', name: 'Euro'},
+        {code: 'MXN', name: 'MXN'},
+        {code: 'GBP', name: 'GBP'}
+    ]
+
+    //use useCurrencies
+    const [currencie, SelectCurrencie] = useCurrencie('Select your currencie', '', currencies)
+
     return ( 
        <form>
+
+           <SelectCurrencie />
            <Button
             type="submit"
             value="calculate"

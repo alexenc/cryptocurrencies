@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import image from "./cryptomonedas.png";
-import Form from "./components/Form";
+import Form from "./components/Form.js";
 
 const Container = styled.div`
 max-width: 900px;
@@ -32,8 +32,7 @@ const Heading = styled.h1`
     height: 6px;
     background-color: #66A2FE;
     display: block;
-  }
-  
+  }  
 `
 
 function App() {
